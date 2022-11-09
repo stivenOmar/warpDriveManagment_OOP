@@ -1,16 +1,16 @@
 class Injector{
     constructor(){
-        this.currentPlasmaFlow = 100;
+        this.totalCurrentPlasmaFlow = 100;
         this.remainingRunningTime = 100;
     }
 
     setDamage = (damage) => {
-        let lostPlasmaFlow = this.currentPlasmaFlow * damage / 100;
-        this.currentPlasmaFlow = this.currentPlasmaFlow - lostPlasmaFlow;
+        let lostPlasmaFlow = this.totalCurrentPlasmaFlow * damage / 100;
+        this.totalCurrentPlasmaFlow = this.totalCurrentPlasmaFlow - lostPlasmaFlow;
     }
 
     isCompletyDamage = () => {
-        return this.currentPlasmaFlow === 0
+        return this.totalCurrentPlasmaFlow === 0
     }
 
     getTimeOperating = () => {
@@ -23,17 +23,17 @@ class Injector{
     }
 
     plasmaFlow = () =>{
-        return this.currentPlasmaFlow;
+        return this.totalCurrentPlasmaFlow;
     }
 
     usePlasmaFlowExtra = (plasmaFlowExtra) => {
-        this.currentPlasmaFlow = this.currentPlasmaFlow + plasmaFlowExtra;
+        this.totalCurrentPlasmaFlow = this.totalCurrentPlasmaFlow + plasmaFlowExtra;
         this.remainingRunningTime = this.remainingRunningTime - plasmaFlowExtra;
     }
 
     maximumPosiblePlasmaFlow = () => {
         const MAXIMUM_PLASMA_FLOW_EXTRA = 99;
-        return this.currentPlasmaFlow + MAXIMUM_PLASMA_FLOW_EXTRA;
+        return this.totalCurrentPlasmaFlow + MAXIMUM_PLASMA_FLOW_EXTRA;
     }
 }
 
