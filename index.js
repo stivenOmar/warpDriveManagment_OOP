@@ -43,9 +43,10 @@ inputs.forEach((input) => {
     let warpDriveManagment = new WarpDriveManagment(input.injectorsDamage, input.ligthSpeed)
     let resultPlasmaInjectors = warpDriveManagment.getPlasmaFlowInjectors();
 
-    if(resultPlasmaInjectors.toString().toLowerCase() == "unable to comply"){
-        input["result"] = resultPlasmaInjectors;
-    }else{
+    
+    input["result"] = resultPlasmaInjectors;
+    
+    if(resultPlasmaInjectors.toString().toLowerCase() !== "unable to comply"){
         let [A, B, C] = resultPlasmaInjectors;
         input["result"] = `A: ${A} mg/s, B: ${B} mg/s, C: ${C} mg/s`;
     }

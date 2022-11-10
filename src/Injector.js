@@ -5,8 +5,8 @@ class Injector{
     }
 
     setDamage = (damage) => {
-        let lostPlasmaFlow = this.totalCurrentPlasmaFlow * damage / 100;
-        this.totalCurrentPlasmaFlow = this.totalCurrentPlasmaFlow - lostPlasmaFlow;
+        const LOST_PLASMA_FLOW = this.totalCurrentPlasmaFlow * damage / 100;
+        this.totalCurrentPlasmaFlow = this.totalCurrentPlasmaFlow - LOST_PLASMA_FLOW;
     }
 
     isCompletyDamage = () => {

@@ -8,7 +8,7 @@ class WarpDriveManagment{
 
     initialiceInjectors = (injectorsDamage) =>{
         return injectorsDamage.map((damage)=> {
-            let injector = new Injector()
+            let injector = new Injector();
             injector.setDamage(damage);
             return injector;
         });
@@ -16,15 +16,11 @@ class WarpDriveManagment{
 
     getPlasmaFlowInjectors = () => {
     
-        let maximumPosiblePlasmaFlowAllInjectors = this.getMaximumPosiblePlasmaFlowAllInjectors() //get the sum of the total plasma flow included the extra
-
-        if(maximumPosiblePlasmaFlowAllInjectors < this.getTotalRequiredPlasmaFlow()){
+        if(this.getMaximumPlasmaFlowAllInjectors() < this.getTotalRequiredPlasmaFlow()){
             return "Unable to comply";
         }
 
-        let totalPlasmaFlowAllInjectors = this.getTotalPlasmaFlowAllInjectors(); //270
-
-        if(totalPlasmaFlowAllInjectors < this.getTotalRequiredPlasmaFlow()){
+        if(this.getTotalPlasmaFlowAllInjectors() < this.getTotalRequiredPlasmaFlow()){
             return this.getPlasmaFlowExtra();
         }
 
@@ -32,12 +28,12 @@ class WarpDriveManagment{
     }
 
     getOperatingTimeInjectors = () => {
-        if(this.getMaximumPosiblePlasmaFlowAllInjectors() < this.getTotalRequiredPlasmaFlow() ){
-            return 0; //0 minutes, unable to comply
+        if(this.getMaximumPlasmaFlowAllInjectors() < this.getTotalRequiredPlasmaFlow() ){
+            return 0;
         }
 
-        let timesOperatingInjectors = this.injectors.map((injector)=> injector.getTimeOperating());
-        let timesDifferentToInfinite = timesOperatingInjectors.filter((timeOperating)=> timeOperating !== "Infinito");
+        const timesOperatingInjectors = this.injectors.map((injector)=> injector.getTimeOperating());
+        const timesDifferentToInfinite = timesOperatingInjectors.filter((timeOperating)=> timeOperating !== "Infinito");
 
         if(timesDifferentToInfinite.length === 0){
             return "Infinito";
@@ -47,7 +43,7 @@ class WarpDriveManagment{
         return minTimeOperatingInjector;
     }
 
-    getMaximumPosiblePlasmaFlowAllInjectors = () => {
+    getMaximumPlasmaFlowAllInjectors = () => {
         let maximumPosible = 0;
         this.injectors.forEach((injector) => maximumPosible+= injector.maximumPosiblePlasmaFlow());
         return maximumPosible;
@@ -58,13 +54,13 @@ class WarpDriveManagment{
     }
 
     getPlasmaFlowExtra = () => {
-        let extraPlasmaFlowNecessaryPerInjector = this.getExtraPlasmaFlowNecessaryPerInjector();
+        const EXTRA_PLASMA_FLOW = this.getExtraPlasmaFlowPerInjector();
         return this.injectors.map((injector) => {
-            if(injector.isCompletyDamage()){
-                return injector.plasmaFlow();
+
+            if(!injector.isCompletyDamage()){
+                injector.usePlasmaFlowExtra(EXTRA_PLASMA_FLOW);
             }
 
-            injector.usePlasmaFlowExtra(extraPlasmaFlowNecessaryPerInjector);
             return injector.plasmaFlow();
         });
     }
@@ -78,7 +74,7 @@ class WarpDriveManagment{
         return this.getTotalRequiredPlasmaFlow() / this.totalFunctionalInjectors();
     }
 
-    getExtraPlasmaFlowNecessaryPerInjector = () => {
+    getExtraPlasmaFlowPerInjector = () => {
         return (this.getTotalRequiredPlasmaFlow() - this.getTotalPlasmaFlowAllInjectors()) / this.totalFunctionalInjectors();
     }
 
