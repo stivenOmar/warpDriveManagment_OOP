@@ -22,10 +22,6 @@ let inputs = [
         ligthSpeed: 80
     },
     {
-        injectorsDamage: [0, 0, 100],
-        ligthSpeed: 80
-    },
-    {
         injectorsDamage: [0, 0, 0],
         ligthSpeed: 150
     },
